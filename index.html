@@ -90,8 +90,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         // ΑΝΤΙΚΑΤΑΣΤΗΣΕ ΤΑ ΠΑΡΑΚΑΤΩ ΜΕ ΤΑ ΣΤΟΙΧΕΙΑ ΣΟΥ
-        const supabaseUrl = 'ΒΑΛΕ_ΕΔΩ_ΤΟ_PROJECT_URL';
-        const supabaseKey = 'ΒΑΛΕ_ΕΔΩ_ΤΟ_ANON_KEY';
+        const supabaseUrl = 'https://bgctuzfrykwarzzdlgdk.supabase.co/rest/v1/';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnY3R1emZyeWt3YXJ6emRsZ2RrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2OTYwNTgsImV4cCI6MjA5MjI3MjA1OH0.LrWuhCdXXXA7ePfEahC2QHVbIZI_ejpxqzQ5Zp1KYEM';
         const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
         document.getElementById('waitlistForm').addEventListener('submit', async (e) => {
