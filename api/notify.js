@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     }
 
     await resend.emails.send({
-      from: "LifeUp4All <onboarding@lifeup4all.com>",
+      from: "onboarding@resend.dev",
       to: "lifeupforall@gmail.com",
       subject: "🔥 Νέα εγγραφή στο LifeUp4All",
       html: `<p>Νέο email στη waitlist: <strong>${email}</strong></p>`,
