@@ -534,55 +534,65 @@
       }
     }
 
-    document.getElementById("waitlistForm").addEventListener("submit", async function (e) {
-      e.preventDefault();
+   document.getElementById("waitlistForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
 
-      const btn = document.getElementById("submitBtn");
-      const name = document.getElementById("userName").value.trim();
-      const email = document.getElementById("userEmail").value.trim();
-      const t = translations[currentLang];
+  console.log("SUBMIT CLICKED");
 
-      if (!_supabase) {
-        showToast("Supabase key missing.", true);
-        return;
-      }
+  const btn = document.getElementById("submitBtn");
+  const name = document.getElementById("userName").value.trim();
+  const email = document.getElementById("userEmail").value.trim();
+  const t = translations[currentLang];
 
-      btn.textContent = t.loading;
-      btn.disabled = true;
+  if (!_supabase) {
+    showToast("Supabase key missing.", true);
+    return;
+  }
 
-      try {
-        const { error } = await _supabase
-          .from("waitlist")
-          .insert([{ name, email }]);
+  btn.textContent = t.loading;
+  btn.disabled = true;
 
-        if (error) {
-          showToast(`${t.toastError} ${error.message}`, true);
-          btn.textContent = t.defaultBtn;
-          btn.disabled = false;
-          return;
-        }
+  try {
+    const { error } = await _supabase
+      .from("waitlist")
+      .insert([{ name, email }]);
 
-        await fetch('/api/notify', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({ name, email })
-});
-        document.getElementById("waitlistForm").reset();
-        showToast(`${name} — ${t.toastSuccess}`);
-        btn.textContent = t.successBtn;
+    if (error) {
+      console.log("SUPABASE ERROR:", error);
+      showToast(`${t.toastError} ${error.message}`, true);
+      btn.textContent = t.defaultBtn;
+      btn.disabled = false;
+      return;
+    }
 
-        setTimeout(() => {
-          btn.textContent = translations[currentLang].defaultBtn;
-          btn.disabled = false;
-        }, 2000);
-      } catch (err) {
-        showToast(`${t.toastError} ${err.message}`, true);
-        btn.textContent = t.defaultBtn;
-        btn.disabled = false;
-      }
+    console.log("CALLING API");
+
+    await fetch('/api/notify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, email })
     });
+
+    console.log("DONE");
+
+    document.getElementById("waitlistForm").reset();
+    showToast(`${name} — ${t.toastSuccess}`);
+    btn.textContent = t.successBtn;
+
+    setTimeout(() => {
+      btn.textContent = translations[currentLang].defaultBtn;
+      btn.disabled = false;
+    }, 2000);
+
+  } catch (err) {
+    console.log("CATCH ERROR:", err);
+    showToast(`${t.toastError} ${err.message}`, true);
+    btn.textContent = t.defaultBtn;
+    btn.disabled = false;
+  }
+});
 
     setLanguage(currentLang);
   </script>
