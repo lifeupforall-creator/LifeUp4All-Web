@@ -562,6 +562,13 @@
           return;
         }
 
+        await fetch('/api/notify', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ name, email })
+});
         document.getElementById("waitlistForm").reset();
         showToast(`${name} — ${t.toastSuccess}`);
         btn.textContent = t.successBtn;
