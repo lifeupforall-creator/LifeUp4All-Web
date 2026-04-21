@@ -1,122 +1,583 @@
 <!DOCTYPE html>
 <html lang="el">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LifeUp4All | AI Wealth Coach</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #0d1117;
-            --text-main: #ffffff;
-            --text-secondary: #a3aed0;
-            --brand-blue: #3ABDFF;
-            --brand-green: #22D383;
-            --brand-purple: #9B6EFF;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LifeUp4All | AI Wealth Coach</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            margin: 0; padding: 0;
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex; flex-direction: column;
-        }
+    :root {
+      --bg: #0a0e1a;
+      --blue: #3ABDFF;
+      --green: #22D383;
+      --purple: #9B6EFF;
+      --text: #ffffff;
+      --text-dim: #8b95a8;
+      --grad: linear-gradient(135deg, #3ABDFF 0%, #22D383 100%);
+    }
 
-        header { padding: 2rem 5%; display: flex; align-items: center; }
-        
-        .logo-container { display: flex; align-items: center; gap: 12px; font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 700; }
+    html { scroll-behavior: smooth; }
 
-        .hero {
-            display: flex; flex: 1; align-items: center; justify-content: space-between;
-            padding: 0 5%; gap: 40px;
-        }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-        .hero-content { flex: 1; max-width: 600px; }
-        h1 { font-family: 'Poppins', sans-serif; font-size: 3rem; line-height: 1.2; margin-bottom: 20px; }
-        p.subtitle { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 30px; }
+    .geo-bg { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+    .geo { position: absolute; border-radius: 16px; opacity: 0.12; animation: float 20s ease-in-out infinite; }
+    .geo-1 { width:220px;height:220px;background:var(--purple);top:-40px;right:10%;transform:rotate(45deg);border-radius:32px; }
+    .geo-2 { width:160px;height:160px;background:var(--blue);bottom:15%;left:-40px;transform:rotate(30deg);animation-delay:-5s;border-radius:50%; }
+    .geo-3 { width:100px;height:100px;background:var(--green);top:40%;right:-20px;transform:rotate(60deg);animation-delay:-10s; }
+    .geo-4 { width:80px;height:80px;background:var(--purple);bottom:30%;left:15%;transform:rotate(15deg);animation-delay:-7s;border-radius:50%; }
+    .geo-5 { width:140px;height:140px;background:var(--green);top:10%;left:5%;transform:rotate(50deg);animation-delay:-3s;border-radius:24px; }
+    .geo-6 { width:60px;height:60px;background:var(--blue);top:60%;left:40%;transform:rotate(20deg);animation-delay:-12s; }
+    .geo-7 { width:180px;height:180px;background:linear-gradient(135deg,var(--purple),var(--blue));bottom:-60px;right:25%;transform:rotate(35deg);animation-delay:-8s;border-radius:40px;opacity:0.08; }
 
-        .waitlist-form { display: flex; flex-direction: column; gap: 15px; max-width: 400px; }
-        
-        input {
-            padding: 15px; border-radius: 8px; border: 1px solid #2d3748;
-            background-color: #1a202c; color: white; font-size: 1rem;
-        }
+    @keyframes float {
+      0%, 100% { transform: rotate(var(--r, 45deg)) translateY(0); }
+      33% { transform: rotate(var(--r, 45deg)) translateY(-20px) translateX(10px); }
+      66% { transform: rotate(var(--r, 45deg)) translateY(15px) translateX(-8px); }
+    }
 
-        button {
-            padding: 15px; border-radius: 8px; border: none;
-            background: linear-gradient(90deg, var(--brand-blue), var(--brand-green));
-            color: white; font-family: 'Poppins', sans-serif; font-weight: 600;
-            cursor: pointer; transition: transform 0.2s;
-        }
+    .ambient { position: fixed; pointer-events: none; z-index: 0; }
+    .ambient-1 { width:600px;height:600px;background:radial-gradient(circle,rgba(58,189,255,0.08) 0%,transparent 70%);top:-200px;right:-100px; }
+    .ambient-2 { width:500px;height:500px;background:radial-gradient(circle,rgba(155,110,255,0.06) 0%,transparent 70%);bottom:-150px;left:-100px; }
+    .ambient-3 { width:400px;height:400px;background:radial-gradient(circle,rgba(34,211,131,0.05) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%); }
 
-        button:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(58, 189, 255, 0.3); }
+    header {
+      position: relative;
+      z-index: 10;
+      padding: 24px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      animation: fadeDown 0.8s ease-out;
+    }
 
-        .hero-image img { width: 100%; max-width: 500px; border-radius: 20px; }
+    .logo-wrap { display: flex; align-items: center; gap: 12px; }
+    .logo-wrap img { height: 44px; width: auto; border-radius: 10px; }
+    .logo-text { display: flex; flex-direction: column; }
+    .logo-name { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; line-height: 1; }
+    .logo-name .blue { color: var(--blue); }
+    .logo-name .green { color: var(--green); }
+    .logo-tagline { font-size: 0.7rem; color: var(--text-dim); font-weight: 400; letter-spacing: 0.5px; margin-top: 2px; }
 
-        @media (max-width: 768px) {
-            .hero { flex-direction: column; text-align: center; padding: 2rem 5%; }
-            .waitlist-form { margin: 0 auto; width: 100%; }
-        }
-    </style>
+    .nav-right { display: flex; align-items: center; gap: 18px; }
+
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      padding: 10px 24px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(155,110,255,0.4);
+      background: rgba(155,110,255,0.1);
+      color: var(--purple) !important;
+      font-weight: 600 !important;
+      transition: all 0.3s !important;
+    }
+
+    .nav-cta:hover {
+      background: rgba(155,110,255,0.2) !important;
+      border-color: var(--purple) !important;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      gap: 4px;
+    }
+
+    .lang-switch button {
+      padding: 8px 12px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-dim);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .lang-switch button.active {
+      background: rgba(58,189,255,0.14);
+      color: var(--blue);
+    }
+
+    .hero {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 60px 5% 80px;
+      gap: 60px;
+      min-height: calc(100vh - 90px);
+    }
+
+    .hero-content { flex: 1.1; max-width: 640px; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 100px;
+      background: rgba(155,110,255,0.1);
+      border: 1px solid rgba(155,110,255,0.2);
+      font-size: 0.82rem;
+      color: var(--purple);
+      font-weight: 500;
+      margin-bottom: 28px;
+      animation: fadeUp 0.8s ease-out 0.2s both;
+    }
+
+    .hero-badge .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    h1 {
+      font-size: 3.4rem;
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -1.5px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s ease-out 0.3s both;
+    }
+
+    h1 .highlight {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 560px;
+      animation: fadeUp 0.8s ease-out 0.4s both;
+    }
+
+    .hero-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 440px;
+      animation: fadeUp 0.8s ease-out 0.5s both;
+    }
+
+    .input-wrap input {
+      width: 100%;
+      padding: 18px 22px;
+      border-radius: 14px;
+      border: 1.5px solid #1e293b;
+      background: #0f172a;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .input-wrap input::placeholder { color: #4a5568; }
+    .input-wrap input:focus { border-color: var(--purple); }
+
+    .hero-form button[type="submit"] {
+      padding: 18px 28px;
+      border-radius: 14px;
+      border: none;
+      background: var(--grad);
+      color: white;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-form button[type="submit"]::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .hero-form button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(58,189,255,0.3), 0 4px 15px rgba(34,211,131,0.2);
+    }
+
+    .hero-form button[type="submit"]:hover::before { opacity: 1; }
+
+    .form-note {
+      font-size: 0.78rem;
+      color: #4a5568;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-visual {
+      flex: 0.9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      animation: fadeUp 1s ease-out 0.4s both;
+    }
+
+    .mentor-container { position: relative; width: 100%; max-width: 480px; }
+
+    .mentor-glow {
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(58,189,255,0.15) 0%, rgba(34,211,131,0.08) 40%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      animation: glowPulse 4s ease-in-out infinite;
+    }
+
+    .mentor-img {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 420px;
+      display: block;
+      margin: 0 auto;
+      filter: drop-shadow(0 20px 60px rgba(58,189,255,0.2));
+    }
+
+    footer {
+      position: relative;
+      z-index: 10;
+      padding: 30px 5%;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.82rem;
+      color: #4a5568;
+      text-align: center;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      padding: 16px 28px;
+      border-radius: 14px;
+      background: rgba(34,211,131,0.15);
+      border: 1px solid rgba(34,211,131,0.3);
+      color: var(--green);
+      font-weight: 600;
+      font-size: 0.95rem;
+      z-index: 1000;
+      backdrop-filter: blur(16px);
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+    }
+
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(30px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+
+    @keyframes fadeDown {
+      from { opacity:0; transform:translateY(-20px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.5; transform:scale(1.3); }
+    }
+
+    @keyframes glowPulse {
+      0%,100% { opacity:0.8; transform:translate(-50%,-50%) scale(1); }
+      50% { opacity:1; transform:translate(-50%,-50%) scale(1.1); }
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 5% 60px;
+        gap: 40px;
+      }
+
+      .hero-content { max-width: 100%; }
+      h1 { font-size: 2.5rem; }
+      .hero-sub { margin-left: auto; margin-right: auto; }
+      .hero-form { margin: 0 auto; }
+      .nav-links { display: none; }
+      .hero-badge { margin-left: auto; margin-right: auto; }
+      .mentor-img { max-width: 300px; }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 2rem; letter-spacing: -1px; }
+      .hero-sub { font-size: 1rem; }
+      header { padding: 16px 5%; }
+      .logo-name { font-size: 1.3rem; }
+    }
+  </style>
 </head>
 <body>
+  <div class="ambient ambient-1"></div>
+  <div class="ambient ambient-2"></div>
+  <div class="ambient ambient-3"></div>
 
-    <header>
-        <div class="logo-container">
-            <img src="logo.png" alt="LifeUp4All Logo" style="height: 40px; width: auto;">
-            LifeUp4All
+  <div class="geo-bg">
+    <div class="geo geo-1"></div>
+    <div class="geo geo-2"></div>
+    <div class="geo geo-3"></div>
+    <div class="geo geo-4"></div>
+    <div class="geo geo-5"></div>
+    <div class="geo geo-6"></div>
+    <div class="geo geo-7"></div>
+  </div>
+
+  <header>
+    <div class="logo-wrap">
+      <img src="logo.png" alt="LifeUp4All Logo">
+      <div class="logo-text">
+        <div class="logo-name">Life<span class="blue">Up</span><span class="green">4All</span></div>
+        <div class="logo-tagline">Life, upgraded — for everyone.</div>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <nav class="nav-links">
+        <a href="#hero" id="navHome">Αρχική</a>
+        <a href="#hero" id="navAbout">Σχετικά</a>
+        <a class="nav-cta" href="#waitlist" id="navCta">Waitlist</a>
+      </nav>
+
+      <div class="lang-switch">
+        <button type="button" id="btnEl" class="active">EL</button>
+        <button type="button" id="btnEn">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        <span id="badgeText">Early Access — Σύντομα κοντά σου</span>
+      </div>
+
+      <h1 id="heroTitle">Πάρε τον έλεγχο των οικονομικών σου με τον πρώτο <span class="highlight">AI Coach</span>.</h1>
+
+      <p class="hero-sub" id="heroSub">
+        Δες πού φεύγουν τα χρήματά σου, οργάνωσε καλύτερα τα έξοδά σου και χτίσε πιο σταθερό οικονομικό μέλλον. Γίνε μέλος της λίστας αναμονής.
+      </p>
+
+      <form class="hero-form" id="waitlistForm">
+        <div class="input-wrap">
+          <input type="text" id="userName" placeholder="Το όνομά σου" required>
         </div>
-    </header>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Πάρε τον έλεγχο των οικονομικών σου με τον πρώτο AI Coach.</h1>
-            <p class="subtitle">Δες πού φεύγουν τα χρήματά σου, οργάνωσε καλύτερα τα έξοδά σου και χτίσε πιο σταθερό οικονομικό μέλλον. Γίνε μέλος της λίστας αναμονής.</p>
-            
-            <form class="waitlist-form" id="waitlistForm">
-                <input type="text" id="userName" placeholder="Το όνομά σου" required>
-                <input type="email" id="userEmail" placeholder="Το email σου" required>
-                <button type="submit" id="submitBtn">Join the Waitlist</button>
-            </form>
+        <div class="input-wrap">
+          <input type="email" id="userEmail" placeholder="Το email σου" required>
         </div>
+        <button type="submit" id="submitBtn">Join the Waitlist</button>
+        <div class="form-note" id="formNote">🔒 Χωρίς spam. Μόνο updates για το launch.</div>
+      </form>
+    </div>
 
-        <div class="hero-image">
-            <img src="mentor.PNG" alt="AI Mentor">
-        </div>
-    </section>
+    <div class="hero-visual">
+      <div class="mentor-container">
+        <div class="mentor-glow"></div>
+        <img src="mentor.PNG" alt="AI Mentor" class="mentor-img">
+      </div>
+    </div>
+  </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        // ΑΝΤΙΚΑΤΑΣΤΗΣΕ ΤΑ ΠΑΡΑΚΑΤΩ ΜΕ ΤΑ ΣΤΟΙΧΕΙΑ ΣΟΥ
-        const supabaseUrl = 'https://bgctuzfrykwarzzdlgdk.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnY3R1emZyeWt3YXJ6emRsZ2RrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2OTYwNTgsImV4cCI6MjA5MjI3MjA1OH0.LrWuhCdXXXA7ePfEahC2QHVbIZI_ejpxqzQ5Zp1KYEM';
-        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+  <footer>
+    <div id="footerCopy">© 2025 LifeUp4All. Με επιφύλαξη κάθε δικαιώματος.</div>
+  </footer>
 
-        document.getElementById('waitlistForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            const name = document.getElementById('userName').value;
-            const email = document.getElementById('userEmail').value;
+  <div class="toast" id="toast"></div>
 
-            btn.textContent = 'Αποστολή...';
-            btn.disabled = true;
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const translations = {
+      el: {
+        navHome: "Αρχική",
+        navAbout: "Σχετικά",
+        navCta: "Waitlist",
+        badgeText: "Early Access — Σύντομα κοντά σου",
+        heroTitle: 'Πάρε τον έλεγχο των οικονομικών σου με τον πρώτο <span class="highlight">AI Coach</span>.',
+        heroSub: "Δες πού φεύγουν τα χρήματά σου, οργάνωσε καλύτερα τα έξοδά σου και χτίσε πιο σταθερό οικονομικό μέλλον. Γίνε μέλος της λίστας αναμονής.",
+        userNamePlaceholder: "Το όνομά σου",
+        userEmailPlaceholder: "Το email σου",
+        submitBtn: "Join the Waitlist",
+        formNote: "🔒 Χωρίς spam. Μόνο updates για το launch.",
+        footerCopy: "© 2025 LifeUp4All. Με επιφύλαξη κάθε δικαιώματος.",
+        loading: "Αποστολή...",
+        successBtn: "Επιτυχία!",
+        defaultBtn: "Join the Waitlist",
+        toastSuccess: "Γράφτηκες επιτυχώς.",
+        toastError: "Σφάλμα καταχώρισης."
+      },
+      en: {
+        navHome: "Home",
+        navAbout: "About",
+        navCta: "Waitlist",
+        badgeText: "Early Access — Coming Soon",
+        heroTitle: 'Take control of your finances with the first <span class="highlight">AI Coach</span>.',
+        heroSub: "See where your money goes, organize your spending better, and build a more stable financial future. Join the waitlist.",
+        userNamePlaceholder: "Your name",
+        userEmailPlaceholder: "Your email",
+        submitBtn: "Join the Waitlist",
+        formNote: "🔒 No spam. Only launch updates.",
+        footerCopy: "© 2025 LifeUp4All. All rights reserved.",
+        loading: "Submitting...",
+        successBtn: "Success!",
+        defaultBtn: "Join the Waitlist",
+        toastSuccess: "You joined successfully.",
+        toastError: "Submission error."
+      }
+    };
 
-            const { error } = await _supabase
-                .from('waitlist')
-                .insert([{ name: name, email: email }]);
+    let currentLang = localStorage.getItem("lifeup_lang") || "el";
 
-            if (error) {
-                alert('Σφάλμα: ' + error.message);
-                btn.textContent = 'Join the Waitlist';
-                btn.disabled = false;
-            } else {
-                alert('Συγχαρητήρια ' + name + '! Γράφτηκες επιτυχώς.');
-                document.getElementById('waitlistForm').reset();
-                btn.textContent = 'Επιτυχία!';
-            }
-        });
-    </script>
+    const btnEl = document.getElementById("btnEl");
+    const btnEn = document.getElementById("btnEn");
+    const toast = document.getElementById("toast");
+
+    function setLanguage(lang) {
+      const t = translations[lang];
+      currentLang = lang;
+      localStorage.setItem("lifeup_lang", lang);
+      document.documentElement.lang = lang;
+
+      document.getElementById("navHome").textContent = t.navHome;
+      document.getElementById("navAbout").textContent = t.navAbout;
+      document.getElementById("navCta").textContent = t.navCta;
+      document.getElementById("badgeText").textContent = t.badgeText;
+      document.getElementById("heroTitle").innerHTML = t.heroTitle;
+      document.getElementById("heroSub").textContent = t.heroSub;
+      document.getElementById("userName").placeholder = t.userNamePlaceholder;
+      document.getElementById("userEmail").placeholder = t.userEmailPlaceholder;
+      document.getElementById("formNote").textContent = t.formNote;
+      document.getElementById("footerCopy").textContent = t.footerCopy;
+
+      const submitBtn = document.getElementById("submitBtn");
+      if (!submitBtn.disabled) {
+        submitBtn.textContent = t.defaultBtn;
+      }
+
+      btnEl.classList.toggle("active", lang === "el");
+      btnEn.classList.toggle("active", lang === "en");
+    }
+
+    btnEl.addEventListener("click", function () {
+      setLanguage("el");
+    });
+
+    btnEn.addEventListener("click", function () {
+      setLanguage("en");
+    });
+
+    function showToast(message, isError = false) {
+      toast.textContent = message;
+      toast.style.color = isError ? "#ff8a8a" : "var(--green)";
+      toast.style.borderColor = isError ? "rgba(255,138,138,0.35)" : "rgba(34,211,131,0.3)";
+      toast.style.background = isError ? "rgba(255,138,138,0.12)" : "rgba(34,211,131,0.15)";
+      toast.classList.add("show");
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3500);
+    }
+
+    let _supabase = null;
+    const supabaseUrl = 'https://bgctuzfrykwarzzdlgdk.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnY3R1emZyeWt3YXJ6emRsZ2RrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2OTYwNTgsImV4cCI6MjA5MjI3MjA1OH0.LrWuhCdXXXA7ePfEahC2QHVbIZI_ejpxqzQ5Zp1KYEM';
+
+    if (typeof supabase !== "undefined" && supabaseKey) {
+      try {
+        _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+      } catch (err) {
+        console.error("Supabase init failed:", err);
+      }
+    }
+
+    document.getElementById("waitlistForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const btn = document.getElementById("submitBtn");
+      const name = document.getElementById("userName").value.trim();
+      const email = document.getElementById("userEmail").value.trim();
+      const t = translations[currentLang];
+
+      if (!_supabase) {
+        showToast("Supabase key missing.", true);
+        return;
+      }
+
+      btn.textContent = t.loading;
+      btn.disabled = true;
+
+      try {
+        const { error } = await _supabase
+          .from("waitlist")
+          .insert([{ name, email }]);
+
+        if (error) {
+          showToast(`${t.toastError} ${error.message}`, true);
+          btn.textContent = t.defaultBtn;
+          btn.disabled = false;
+          return;
+        }
+
+        document.getElementById("waitlistForm").reset();
+        showToast(`${name} — ${t.toastSuccess}`);
+        btn.textContent = t.successBtn;
+
+        setTimeout(() => {
+          btn.textContent = translations[currentLang].defaultBtn;
+          btn.disabled = false;
+        }, 2000);
+      } catch (err) {
+        showToast(`${t.toastError} ${err.message}`, true);
+        btn.textContent = t.defaultBtn;
+        btn.disabled = false;
+      }
+    });
+
+    setLanguage(currentLang);
+  </script>
 </body>
 </html>
